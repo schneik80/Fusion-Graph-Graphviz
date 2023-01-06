@@ -5,7 +5,6 @@ import os
 import adsk.core
 import adsk.fusion
 import traceback
-import re
 
 # Performs a recursive traversal of an entire assembly structure.
 
@@ -51,12 +50,11 @@ def run(context):
         resultString = (
             'digraph "' + parentOcc + '" {' + "\n"
         )  # Change layout engine here
-        resultString += 'layout="fdp";' + "\n"
+        resultString += 'layout="dot";' + "\n"
         resultString += "node[width=.75,height=.5,fontsize=9]" + "\n"
         resultString += "nodesep=.2" + "\n"
-        resultString += (
-            "concentrate=false" + "\n"
-        )  # true draw one line, false draw lines for each occurrence
+        resultString += "ranksep=3" + "\n"
+        resultString += "concentrate=false" + "\n"
         resultString += 'mode="ipsep"' + "\n"
         resultString += "diredgeconstraints=true" + "\n"
         resultString += 'overlap="false"' + "\n"
@@ -68,7 +66,6 @@ def run(context):
 
         resultString += "}"
 
-        msg = ""
         # Set styles of file dialog.
         folderDlg = ui.createFolderDialog()
         folderDlg.title = "Choose Folder to save graphviz Graph"
@@ -80,7 +77,8 @@ def run(context):
             # Write the results to the file
             with open(filepath, "w") as f:
                 f.write(resultString)
-            ui.messageBox("Graph saved at: " + filepath)
+            ui.messageBox("Graph dot file saved at: " + filepath)
+
         else:
             return
 
