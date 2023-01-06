@@ -1,4 +1,4 @@
-# Autohor - Kevin S
+# Author - Kevin S
 # Description - Export an assembly as a graphviz graph
 
 import os
@@ -8,7 +8,6 @@ import traceback
 import re
 
 # Performs a recursive traversal of an entire assembly structure.
-
 
 def traverseAssembly(parent, occurrences, currentLevel, inputString):
     for i in range(0, occurrences.count):
@@ -28,16 +27,6 @@ def traverseAssembly(parent, occurrences, currentLevel, inputString):
                 occ.name, occ.childOccurrences, currentLevel + 1, inputString)
     return inputString
 
-
-# Returns a string containing the specified number of spaces.
-def spaces(spaceCount):
-    result = ''
-    for i in range(0, spaceCount):
-        result += ' '
-
-    return result
-
-
 def run(context):
     ui = None
     try:
@@ -55,7 +44,7 @@ def run(context):
 
         # Create the title for the output.
         parentOcc = design.parentDocument.name
-        resultString = 'digraph' + ' {' + '\n' + 'layout="circo";' + '\n'
+        resultString = 'digraph' + ' {' + '\n' + 'layout="fdp";' + '\n' # Change layout engine here
         #resultString += parentOcc + '\n'
 
         # Call the recursive function to traverse the assembly and build the output string.
@@ -79,13 +68,6 @@ def run(context):
             ui.messageBox('Graph saved at: ' + filepath)
         else:
             return
-
-        """# Display the result.
-        # Write the results to the TEXT COMMANDS window.
-        textPalette = ui.palettes.itemById('TextCommands')
-        if not textPalette.isVisible:
-            textPalette.isVisible = True
-        textPalette.writeText(resultString) """
 
     except:
         if ui:
